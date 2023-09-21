@@ -99,7 +99,7 @@ export interface SinglePostProps {
 export interface ModalProps {
   children: ReactNode;
 }
-export interface Title{
+export interface TitleProps{
   children:string
 }
 export interface BtnProps {
@@ -125,4 +125,15 @@ export interface SinglePostProps {
   userId: string,
   _v:number,
   _id:string
+}
+export interface Comment {
+  body: string
+  createdAt:string
+  email:string
+  name:string
+  postId:string
+  updatedAt:string
+  __v:number
+  _id:string
+
 }

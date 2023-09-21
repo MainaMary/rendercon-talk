@@ -1,6 +1,6 @@
 import {configureStore} from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
-import { authReducer } from "@/redux/features/usersSlice";
+import { authReducer } from "../features/usersSlice";
 import { counterReducer } from "../features/paginationSlice";
 import { postReducer } from "../features/postSlice";
 import { userApi } from "./postApi";

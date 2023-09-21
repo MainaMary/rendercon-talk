@@ -1,4 +1,4 @@
-import { ActionTypes, initialStateType } from "@/model/types";
+import { ActionTypes, initialStateType } from "../model/types"
 interface IProps {
     key:string;
     value:string

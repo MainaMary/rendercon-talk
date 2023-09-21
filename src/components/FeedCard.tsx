@@ -1,20 +1,19 @@
 import { useState } from "react";
-import { FaCommentAlt } from "react-icons/fa";
-import { SinglePostProps } from "@/model/types";
-import Input from "./Input";
-import Button from "./Button";
-import { useAppDispatch } from "@/redux/hooks";
-import { setPostId, setEdit } from "@/redux/features/postSlice";
-import ConfirmModal from "./ConfirmModal";
-import AddPost from "./AddPost";
-import { useAppSelector } from "@/redux/hooks";
-import { useRouter } from "next/navigation";
-import Modal from "./Modal";
+import { SinglePostProps } from "../model/types";
+import { setPostId, setEdit } from "../redux/features/postSlice";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import {
   useAddCommentMutation,
   useGetAllPostsCommentsQuery,
-  useGetPostsQuery,
-} from "@/redux/services/api";
+} from "../redux/services/api";
+import AddPost from "./AddPost";
+import Button from "./Button";
+import ConfirmModal from "./ConfirmModal";
+import Input from "./Input";
+import Modal from "./Modal";
+import { useNavigate } from "react-router-dom";
+import { FaCommentAlt } from "react-icons/fa";
+
 interface Props {
   post: SinglePostProps;
   showComment: boolean;
@@ -25,10 +24,12 @@ export default function FeedCard({ post, showComment }: Props) {
   const [comment, setComment] = useState<string>("");
   const [id, setId] = useState<string>("");
   const dispatch = useAppDispatch();
-  const router = useRouter();
+  const navigate = useNavigate();
   const [addComment, { data, isLoading: isLoadingComment }] =
     useAddCommentMutation();
-  const { data: allComments } = useGetAllPostsCommentsQuery(showComment && post._id);
+  const { data: allComments } = useGetAllPostsCommentsQuery(
+    showComment && post._id
+  );
   const { isEdit } = useAppSelector((state) => state.post);
   const handleModal = () => {
     setShowModal((prev) => !prev);
@@ -64,7 +65,7 @@ export default function FeedCard({ post, showComment }: Props) {
   };
   console.log(allComments?.data?.length);
   const handleNavigate = (id: string) => {
-    router.push(`/feed/${id}`);
+    navigate(`/feed/${id}`);
   };
   return (
     <>
@@ -145,7 +146,11 @@ export default function FeedCard({ post, showComment }: Props) {
       )}
       {showModal && isEdit && (
         <Modal>
-          <AddPost openModal={showModal} handleModal={handleModal} isUser={showComment}/>
+          <AddPost
+            openModal={showModal}
+            handleModal={handleModal}
+            isUser={showComment}
+          />
         </Modal>
       )}
     </>

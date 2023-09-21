@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CounterState } from "@/model/types";
+import { CounterState } from "../../model/types";
 const initialState = {
   pageNumber: 1,
 } as CounterState;

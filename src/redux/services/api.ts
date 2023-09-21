@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { PostProps } from "@/model/types";
+import { PostProps } from "../../model/types";
 import { TOKEN } from "../features/usersSlice";
 //64cb6c5590cde15731b5ca79
 const getToken = () =>{

@@ -1,9 +1,9 @@
 "use client";
-import Signin from "@/components/Signin"
-export default function Auth(){
-    return (
-        <div>
-            <Signin userExist={true}/>
-        </div>
-    )
+import Signin from "../../../components/Signin";
+export default function SignIn() {
+  return (
+    <div>
+      <Signin userExist={true} />
+    </div>
+  );
 }
