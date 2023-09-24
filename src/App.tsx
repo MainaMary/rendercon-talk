@@ -5,6 +5,7 @@ import Feed from "./pages/feed/Feed";
 import SignIn from "./pages/auth/signin/page";
 import Register from "./pages/auth/register/page";
 import SingleFeed from "./pages/feed";
+import NotFound from "./pages/error/NotFound";
 
 const appRoutes = [
   {
@@ -26,6 +27,10 @@ const appRoutes = [
   {
     component: <SingleFeed />,
     path: "/feed/:id",
+  },
+  {
+    component: <NotFound />,
+    path: "*",
   },
 ];
 function App() {
