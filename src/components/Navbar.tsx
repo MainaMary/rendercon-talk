@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const navLinks = [
   {
     label: "Home",
-    path: "/",
+    path: "/home",
     id: "1",
   },
   {
@@ -63,7 +63,7 @@ export default function NavBar() {
             <p className="text-color-400">{currentUser.email}</p>
           </div>
         ) : (
-          <Link href={"/auth/signin"}>
+          <Link to={"/auth/signin"}>
             <button>Sign in</button>
           </Link>
         )}

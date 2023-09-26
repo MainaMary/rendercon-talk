@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { PostProps } from "../../model/types";
+import { BASE_URL } from "../../constants";
 import { TOKEN } from "../features/usersSlice";
 //64cb6c5590cde15731b5ca79
 const getToken = () =>{
@@ -8,7 +9,7 @@ const getToken = () =>{
 }
 export const api = createApi({
     reducerPath: "posts",
-    baseQuery: fetchBaseQuery({baseUrl:'http://localhost:5000/',
+    baseQuery: fetchBaseQuery({baseUrl:BASE_URL,
     headers: {
       Authorization: `Bearer ${getToken()}`,
       'Content-Type': 'application/json',
@@ -34,6 +35,7 @@ export const api = createApi({
         }),
       getPosts: builder.query({
         query: (pageNumber) => `post?page=${pageNumber}`,
+         transformResponse: (response: { data: any }) => response.data,
         providesTags: ["Posts"],
       }),
       getPostsByUser:builder.query({

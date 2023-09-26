@@ -11,6 +11,7 @@ import { useGetPostsByUserQuery } from "../../redux/services/api";
 export default function Feed() {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const { user } = useAppSelector((state) => state.auth);
+  console.log({ user });
   const { data, isLoading } = useGetPostsByUserQuery(user._id);
   console.log(data);
 

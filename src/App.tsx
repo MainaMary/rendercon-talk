@@ -1,4 +1,3 @@
-import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Feed from "./pages/feed/Feed";
@@ -22,7 +21,7 @@ const appRoutes = [
   },
   {
     component: <Feed />,
-    path: "/feed",
+    path: "/profile",
   },
   {
     component: <SingleFeed />,
