@@ -24,7 +24,9 @@ export default function Signin({ userExist }: AuthProps) {
   const [state, dispatch]: any = useReducer<any>(formReducer, initialState);
   const [error, setError] = useState<string>("");
   const { visible, handleVisible } = useVisibleHook();
-  const { data, isLoading, isFetching } = useGetAllUsersQuery(null);
+  const { data, isLoading, isFetching } = useGetAllUsersQuery(null, {
+    refetchOnFocus: false,
+  });
 
   const navigate = useNavigate();
   const [
