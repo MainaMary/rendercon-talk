@@ -23,8 +23,6 @@ export default function NavBar() {
   const [currentUser, setCurrentUser] = useState({
     id: "",
     email: "",
-    password: "",
-    __v: 0,
   });
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
@@ -38,8 +36,6 @@ export default function NavBar() {
       parsedUser ?? {
         _id: "",
         email: "",
-        password: "",
-        __v: 0,
       }
     );
   }, []);
@@ -61,6 +57,7 @@ export default function NavBar() {
         {currentUser ? (
           <div>
             <p className="text-color-400">{currentUser.email}</p>
+            <p>Log out</p>
           </div>
         ) : (
           <Link to={"/auth/signin"}>

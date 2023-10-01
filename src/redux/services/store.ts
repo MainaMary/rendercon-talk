@@ -5,14 +5,20 @@ import { counterReducer } from "../features/paginationSlice";
 import { postReducer } from "../features/postSlice";
 import { userApi } from "./postApi";
 import { api } from "./api";
+;
+
 export const store = configureStore({
     reducer:{
       auth:authReducer,
       counter: counterReducer,
       post: postReducer,
       [userApi.reducerPath]: userApi.reducer,
-      [api.reducerPath] :api.reducer
+      [api.reducerPath] :api.reducer,
+      
     },
+    // Adding the api middleware enables caching, invalidation, polling,
+  // and other useful features of `rtk-query`.
+
     middleware: (getDefaultMiddleware) =>getDefaultMiddleware({}).concat([userApi.middleware, api.middleware]),
 })
 

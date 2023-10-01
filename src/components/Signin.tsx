@@ -11,7 +11,6 @@ import {
   useLoginUserMutation,
   useRegisterUserMutation,
 } from "../redux/services/api";
-import { useGetAllUsersQuery } from "../redux/services/postApi";
 import Input from "./Input";
 import Label from "./Label";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
@@ -24,9 +23,6 @@ export default function Signin({ userExist }: AuthProps) {
   const [state, dispatch]: any = useReducer<any>(formReducer, initialState);
   const [error, setError] = useState<string>("");
   const { visible, handleVisible } = useVisibleHook();
-  const { data, isLoading, isFetching } = useGetAllUsersQuery(null, {
-    refetchOnFocus: false,
-  });
 
   const navigate = useNavigate();
   const [
@@ -37,10 +33,8 @@ export default function Signin({ userExist }: AuthProps) {
       data: loginResponse,
     },
   ] = useLoginUserMutation();
-  const [
-    registerUser,
-    { isLoading: isRegisteringUser, isSuccess: isSuccessRegister },
-  ] = useRegisterUserMutation();
+  const [registerUser, { data: registerData, isSuccess: isSuccessRegister }] =
+    useRegisterUserMutation();
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setError("");
@@ -64,7 +58,9 @@ export default function Signin({ userExist }: AuthProps) {
       const response: any = await registerUser(payload);
       if (response.data) {
         toast.info("Registration successful");
-        dispatchUser(setCredentials(response.data.data));
+
+        const { _id, email } = response.data.data;
+        dispatchUser(setCredentials({ id: _id, email }));
         navigate("/signin");
       }
       if (response?.error) {
@@ -76,31 +72,26 @@ export default function Signin({ userExist }: AuthProps) {
         toast.info("Login successful");
         console.log(response.data, "login");
         dispatchUser(setUserToken(response.data.token));
-        navigate("/");
+        navigate("/home");
       }
       if (response?.error) {
         setError(response?.error?.data?.message);
       }
     }
-    // if(data && data.length > 0){
-    //   const currentLoggedInUser = data?.find(user => user.email === email)
-    //   if(currentLoggedInUser){
-    //     dispatchUser(setCredentials(currentLoggedInUser))
-    //     router.push('/');
-    //   }else{
-    //     setError('Please submit correct credentials')
-    //   }
-    // }
   };
   useEffect(() => {
     if (isSuccessRegister) {
       toast.info("User registered successfully");
+      // dispatchUser(setCredentials(registerData));
     }
     if (isSuccessLogin) {
       toast.info("User logged in successfully");
+      // dispatchUser(setUserToken(loginResponse));
     }
   }, [isSuccessRegister, isSuccessLogin]);
 
+  console.log({ loginResponse });
+  console.log({ registerData });
   return (
     <div className="w-full md:w-[50%] shadow-lg rounded-2xl flex m-auto bg-white px-8 py-3 items-center justify-center h-auto mt-12">
       <form className="w-full" onSubmit={handleSubmit}>

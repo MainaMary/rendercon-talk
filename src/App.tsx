@@ -2,13 +2,13 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Feed from "./pages/feed/Feed";
 import SignIn from "./pages/auth/signin/page";
-import Register from "./pages/auth/register/page";
 import SingleFeed from "./pages/feed";
 import NotFound from "./pages/error/NotFound";
+// import TestComponent from "./components/TestComponent";
 
 const appRoutes = [
   {
-    component: <Register />,
+    component: <Home />,
     path: "/",
   },
   {
@@ -23,14 +23,15 @@ const appRoutes = [
     component: <Feed />,
     path: "/profile",
   },
-  {
-    component: <SingleFeed />,
-    path: "/feed/:id",
-  },
+
   {
     component: <NotFound />,
     path: "*",
   },
+  // {
+  //   component: <TestComponent />,
+  //   path: "/feed/:commentId",
+  // },
 ];
 function App() {
   return (

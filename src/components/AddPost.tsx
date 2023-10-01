@@ -16,7 +16,7 @@ import Label from "./Label";
 import Title from "./Title";
 
 const AddPost = (props: MProps) => {
-  const { handleModal, isUser } = props;
+  const { handleModal } = props;
   const [formValues, setFormValues] = useState<PostProps>({
     title: "",
     body: "",
@@ -25,7 +25,6 @@ const AddPost = (props: MProps) => {
   const [error, setError] = useState<string>("");
   const [addPost] = useAddPostMutation();
   const [updatePost] = useUpdatePostMutation();
-  const { data } = useGetPostsQuery("");
   const { setShowModal } = useModal();
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -2,11 +2,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { PostProps } from "../../model/types";
 import { BASE_URL } from "../../constants";
-import { TOKEN } from "../features/usersSlice";
+import { getToken } from "../../constants";
 //64cb6c5590cde15731b5ca79
-const getToken = () =>{
-  return localStorage.getItem(TOKEN)
-}
+
 export const api = createApi({
     reducerPath: "posts",
     baseQuery: fetchBaseQuery({baseUrl:BASE_URL,
@@ -45,8 +43,9 @@ export const api = createApi({
       getSinglePost :builder.query({
          query:(id) => `post/${id}`,
          providesTags: ["Posts"],
+          keepUnusedDataFor: 5 * 60 * 1000
       }),
-      addPost :builder.mutation<void, PostProps>({
+      addPost :builder.mutation<PostProps, any>({
         query: payload =>({
             url: '/post',
             method:'POST',
@@ -80,12 +79,28 @@ export const api = createApi({
         invalidatesTags:['Comment']
     }),
     getAllPostsComments : builder.query({
-        query:(id) =>`/post-comments/?postId=${id}`,
+        query:(id) =>({
+          url: `/post-comments/?postId=${id}`,
+          
+        }),
         providesTags:["Comment"]
 
     }),
     deleteComment: builder.mutation({
-        query:(id) =>`/comment/${id}`,
+        query:(id) =>({
+          url:`/comment/${id}`,
+          method:'DELETE'
+        }),
+      //    onMutate: (userData) => {
+      
+      //   const optimisticResponse = { ...userData, status: 'updating' };
+      //   return optimisticResponse;
+      // },
+    
+      // onError: (error, variables, context) => {
+      //   // Revert the optimistic update in case of an error
+      //   return context.rollback();
+      // },
         invalidatesTags:["Comment"]
 
     })

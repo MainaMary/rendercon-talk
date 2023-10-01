@@ -11,6 +11,7 @@ import Button from "./Button";
 import ConfirmModal from "./ConfirmModal";
 import Input from "./Input";
 import Modal from "./Modal";
+import { formatDate } from "../utils";
 import { useNavigate } from "react-router-dom";
 import { FaCommentAlt } from "react-icons/fa";
 
@@ -25,12 +26,12 @@ export default function FeedCard({ post, showComment }: Props) {
   const [id, setId] = useState<string>("");
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [addComment, { data, isLoading: isLoadingComment }] =
-    useAddCommentMutation();
+  const [addComment, { data }] = useAddCommentMutation();
   const { data: allComments } = useGetAllPostsCommentsQuery(
     showComment && post._id
   );
   const { isEdit } = useAppSelector((state) => state.post);
+  const { user } = useAppSelector((state) => state.auth);
   const handleModal = () => {
     setShowModal((prev) => !prev);
   };
@@ -55,15 +56,16 @@ export default function FeedCard({ post, showComment }: Props) {
       body: comment,
       name: "testuser",
       postId: id,
-      email: "test@gmail.com",
+      email: user.email,
     };
     setComment("");
-    const response = await addComment(payload);
+    await addComment(payload);
+
+    console.log({ data });
     if (data?.status) {
       handleCommentForm();
     }
   };
-  console.log(allComments?.data?.length);
   const handleNavigate = (id: string) => {
     navigate(`/feed/${id}`);
   };
@@ -72,7 +74,7 @@ export default function FeedCard({ post, showComment }: Props) {
       <div className="flex flex-col mt-12 px-3 py-4 overflow-hidden rounded-lg border bg-white">
         <div className="flex items-center h-auto">
           <div className="text-sm">
-            <p> {post.createdAt}</p>
+            <p> {formatDate(post.createdAt)}</p>
           </div>
         </div>
         <p className="text-dark-blue h-[40px] line-clamp-2 mt-4 ">

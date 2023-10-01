@@ -2,6 +2,9 @@ import { ReactNode } from "react";
 export type CounterState = {
   pageNumber: number;
 };
+export type childrenProps = {
+  children: any;
+};
 export interface User{
     id: string,
     name: string,
